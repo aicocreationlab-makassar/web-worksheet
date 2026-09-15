@@ -1,0 +1,4 @@
+export const safetyRules =
+  "Use child-friendly, inclusive and non-frightening imagery. No unsafe behavior, adult themes or violent imagery. Print only the optional identity explicitly supplied in PERSONALIZATION, without inventing or inferring additional personal information. Adult supervision for any cutting activity.";
+export const negativeRules =
+  "Avoid watermarks, logos, signatures, UI elements, browser frames, mockups, hands holding the page, desk backgrounds, cropped worksheet edges, illegible or tiny text, cluttered composition, excessive decoration, distorted letters, distorted numbers, unintended duplicate objects, inconsistent counting, scary imagery, adult themes and violent imagery. Do not print answers in the child’s response area. Repeated objects are allowed only when intentionally required by the activity.";
