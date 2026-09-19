@@ -31,21 +31,23 @@ test("personalized series can continue by exact command and full instructions", 
   const initial = await page
     .getByRole("textbox", { name: "Edit prompt worksheet" })
     .inputValue();
-  expect(initial).toContain("series of 3");
+  expect(initial).toContain("Image 1 of 3");
   expect(initial).toContain("Alya Nūr");
-  expect(initial).toContain("Generate ONLY image 1 now");
+  expect(initial).toContain(
+    "Create and render ONE finished printable worksheet image now",
+  );
   await page
     .getByRole("button", { name: "Salin perintah", exact: true })
     .click();
   expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(
-    "lanjut gambar 2",
+    "gambar 2",
   );
   await page.getByLabel("Mau membuat gambar berapa?").selectOption("3");
   await page
     .getByRole("button", { name: "Salin perintah", exact: true })
     .click();
   expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(
-    "lanjut gambar 3",
+    "gambar 3",
   );
   await page
     .getByText("Butuh instruksi lanjutan yang lebih lengkap?", { exact: false })
@@ -59,9 +61,9 @@ test("personalized series can continue by exact command and full instructions", 
   const continuation = await page.evaluate(() =>
     navigator.clipboard.readText(),
   );
-  expect(continuation).toContain("Generate ONLY image 3 now");
+  expect(continuation).toContain("Image 3 of 3");
   expect(continuation).toContain("Alya Nūr");
-  expect(continuation).not.toContain("Generate ONLY image 1 now");
+  expect(continuation).not.toContain("Image 1 of 3");
   await page.reload();
   await expect(page.getByLabel("Mau membuat gambar berapa?")).toHaveValue("3");
   await page.goto("/history");
@@ -145,14 +147,14 @@ test("the complete generator and history work offline after precaching", async (
   await page.getByRole("button", { name: "Siapkan worksheet-ku" }).click();
   await expect(
     page.getByRole("textbox", { name: "Edit prompt worksheet" }),
-  ).toHaveValue(/Generate ONLY image 1 now/);
+  ).toHaveValue(/Create and render ONE finished printable worksheet image now/);
   await expect(page.locator(".offline-status")).toBeVisible();
   await page.goto("/history");
   await expect(page.locator(".history-card")).toHaveCount(1);
   await page.locator(".history-card").click();
   await expect(
     page.getByRole("textbox", { name: "Edit prompt worksheet" }),
-  ).toHaveValue(/CONTINUATION PROTOCOL/);
+  ).toHaveValue(/NEXT PAGES/);
   await context.setOffline(false);
 });
 

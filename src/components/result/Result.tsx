@@ -138,7 +138,9 @@ export function Result() {
       {form.pageCount > 1 && (
         <nav className="result-shortcuts" aria-label="Akses cepat worksheet">
           <a href="#prompt-awal">1. Prompt awal</a>
-          <a href="#lanjut-seri">2. Lanjut gambar <ArrowUpRight size={16} /></a>
+          <a href="#lanjut-seri">
+            2. Lanjut gambar <ArrowUpRight size={16} />
+          </a>
         </nav>
       )}
       <div className="result-workflow" aria-label="Cara memakai prompt">
@@ -161,7 +163,7 @@ export function Result() {
           <span>
             <strong>
               {form.pageCount > 1
-                ? "Ketik “lanjut gambar 2”"
+                ? "Ketik “gambar 2”"
                 : "Periksa, unduh, dan cetak"}
             </strong>
             <small>
@@ -305,7 +307,7 @@ export function Result() {
             <li>Periksa tulisan, objek, dan aktivitasnya.</li>
             <li>
               {form.pageCount > 1
-                ? "Ketik “lanjut gambar 2” untuk lembar berikutnya."
+                ? "Ketik “gambar 2” untuk lembar berikutnya."
                 : "Gunakan saran perbaikan jika perlu."}
             </li>
             <li>Unduh gambar dan cetak hasilnya.</li>

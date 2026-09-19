@@ -18,7 +18,7 @@ import { InstallCard } from "@/components/pwa/PWAProvider";
 const faqs = [
   [
     "Bagaimana cara membuat lembar berikutnya?",
-    "Salin prompt awal ke ChatGPT untuk membuat gambar 1. Setelah hasilnya sesuai, ketik “lanjut gambar 2” di percakapan yang sama. Lanjutkan sesuai jumlah lembar yang kamu pilih. Setiap gambar berisi satu worksheet dengan latihan baru.",
+    "Salin prompt awal ke ChatGPT untuk membuat gambar 1. Setelah hasilnya sesuai, ketik “gambar 2” di percakapan yang sama. Lanjutkan sesuai jumlah lembar yang kamu pilih. Setiap gambar berisi satu worksheet dengan latihan baru.",
   ],
   [
     "Bisa pakai nama anak dan identitas sendiri?",
@@ -185,7 +185,7 @@ export default function Home() {
           </p>
           <div className="showcase-command">
             <span>Ketik di chat yang sama</span>
-            <code>lanjut gambar 2</code>
+            <code>gambar 2</code>
             <span>sesederhana itu.</span>
           </div>
           <Link prefetch={false} href="/create" className="text-button">
@@ -251,7 +251,7 @@ export default function Home() {
                 n: "03",
                 color: "mint",
                 title: "Lanjutkan petualangannya",
-                text: "Ketik “lanjut gambar 2” di chat yang sama. Periksa hasil, unduh, lalu nikmati waktu belajar bersama.",
+                text: "Ketik “gambar 2” di chat yang sama. Periksa hasil, unduh, lalu nikmati waktu belajar bersama.",
               },
             ].map((x) => (
               <div className="how-card" key={x.n}>

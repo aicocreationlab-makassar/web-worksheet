@@ -125,7 +125,7 @@ export function Generator() {
     }
   }, [params, router, s]);
   const f = s.form;
-  const reviewed = s.step===4 ? WorksheetFormSchema.safeParse(f) : null;
+  const reviewed = s.step === 4 ? WorksheetFormSchema.safeParse(f) : null;
   const update = (data: Partial<DraftForm>) => {
     s.update(data);
     setError("");
@@ -785,8 +785,16 @@ export function Generator() {
                     }[f.difficulty]
                   }{" "}
                   · <strong>Jumlah aktivitas:</strong>{" "}
-                  {reviewed?.success?getTaskCount(reviewed.data):(f.activityCount ?? "Otomatis sesuai usia")} per lembar{reviewed?.success&&f.activityCount&&getTaskCount(reviewed.data)<f.activityCount?' (disesuaikan usia)':''} ·{" "}
-                  <strong>Objek:</strong> {f.objectCount ?? "Otomatis"}
+                  {reviewed?.success
+                    ? getTaskCount(reviewed.data)
+                    : (f.activityCount ?? "Otomatis sesuai usia")}{" "}
+                  per lembar
+                  {reviewed?.success &&
+                  f.activityCount &&
+                  getTaskCount(reviewed.data) < f.activityCount
+                    ? " (disesuaikan usia)"
+                    : ""}{" "}
+                  · <strong>Objek:</strong> {f.objectCount ?? "Otomatis"}
                 </p>
                 <p>
                   <strong>Karakter:</strong>{" "}
@@ -817,8 +825,8 @@ export function Generator() {
                   {f.pageCount > 1 && (
                     <>
                       {" "}
-                      Setelah itu, cukup ketik{" "}
-                      <strong>“lanjut gambar 2”</strong> di chat yang sama.
+                      Setelah itu, cukup ketik <strong>“gambar 2”</strong> di
+                      chat yang sama.
                     </>
                   )}
                 </p>

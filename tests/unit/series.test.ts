@@ -20,14 +20,13 @@ const form = { ...templates[2].form, pageCount: 5 };
 describe("sequential worksheet series", () => {
   it("generates one first image and explicitly waits for continuation", () => {
     const p = buildWorksheetPrompt(form);
-    expect(p).toContain("series of 5");
+    expect(p).toContain("Image 1 of 5");
     expect(p).toContain(
-      "ONE RESPONSE = ONE WORKSHEET IMAGE = ONE PRINTABLE PAGE",
+      "Create and render ONE finished printable worksheet image now",
     );
-    expect(p).toContain("generating ONLY image 1, then STOP");
-    expect(p).toContain('"lanjut gambar 2", generate ONLY image 2');
-    expect(p).toContain("not a new theme or a new design");
-    expect(p).toContain("Lembar N dari 5");
+    expect(p).toContain('When the user later sends "gambar 2"');
+    expect(p).toContain("render only that next worksheet page");
+    expect(p).toContain("Lembar 1 dari 5");
   });
   it("plans unique numbered learning sets within the same activity", () => {
     const pages = getSeriesPlan({ ...form, pageCount: 20 });
@@ -43,33 +42,31 @@ describe("sequential worksheet series", () => {
   it("anchors character, typography and identity across the series", () => {
     const p = buildWorksheetPrompt(form);
     for (const text of [
-      "SERIES DESIGN RECORD",
-      "exact character silhouette",
-      "3–5 palette colors",
-      "header identity placement",
-      "CURRENT page only",
-      "must not silently advance",
+      "character style, palette, type, margins, and identity",
+      "fresh tasks and the same design",
     ])
       expect(p).toContain(text);
   });
   it("uses an independent continuation specification without restarting", () => {
     const p = buildContinuationPrompt(form, 3);
-    expect(p).toContain("ONLY image 3 of 5");
-    expect(p).toContain("Generate ONLY image 3 now");
+    expect(p).toContain("Image 3 of 5");
+    expect(p).toContain(
+      "Create and render ONE finished printable worksheet image now",
+    );
     expect(p).toContain("Lembar 3 dari 5");
-    expect(p).not.toContain("Generate ONLY image 1 now");
-    expect(p).not.toContain("generating ONLY image 1, then STOP");
+    expect(p).not.toContain("Image 1 of 5");
+    expect(p).not.toContain("planning protocol");
   });
   it("does not propose nonexistent next pages", () => {
     const p = buildContinuationPrompt({ ...form, pageCount: 3 }, 3);
-    expect(p).toContain("final page");
-    expect(p).not.toContain('next user command is "lanjut gambar 4"');
+    expect(p).toContain("final requested page");
+    expect(p).not.toContain('"gambar 4"');
   });
   it("handles a one-page worksheet without promising a second page", () => {
     const p = buildWorksheetPrompt({ ...form, pageCount: 1 });
-    expect(p).toContain("This project contains only page 1");
-    expect(p).not.toContain('"lanjut gambar 2", generate ONLY image 2');
-    expect(p).toContain("final page");
+    expect(p).toContain("Image 1 of 1");
+    expect(p).not.toContain('"gambar 2"');
+    expect(p).toContain("final requested page");
   });
   it.each([0, 1, 6, 2.5, NaN])(
     "rejects invalid continuation page %s",
@@ -78,8 +75,8 @@ describe("sequential worksheet series", () => {
     },
   );
   it("provides a short, exact chat command", () => {
-    expect(getContinuationCommand(2)).toBe("lanjut gambar 2");
-    expect(getContinuationCommand(20)).toBe("lanjut gambar 20");
+    expect(getContinuationCommand(2)).toBe("gambar 2");
+    expect(getContinuationCommand(20)).toBe("gambar 20");
     expect(() => getContinuationCommand(21)).toThrow();
   });
   it("validates page count before continuing the activity step", () => {
@@ -105,7 +102,18 @@ describe("sequential worksheet series", () => {
   });
 });
 describe("optional personalization", () => {
-  it('preserves a supplied title when the worksheet language differs',()=>{const p=buildWorksheetPrompt({...form,language:'en',worksheetTitle:'Petualangan Alya'});expect(p).toContain('preserve every supplied personalization value verbatim, including the series title');expect(p).toContain('"Petualangan Alya"');expect(getFollowups(form)[4].prompt).toContain('series title or additional identity');});
+  it("preserves a supplied title when the worksheet language differs", () => {
+    const p = buildWorksheetPrompt({
+      ...form,
+      language: "en",
+      worksheetTitle: "Petualangan Alya",
+    });
+    expect(p).toContain("copy exactly, never translate");
+    expect(p).toContain('"Petualangan Alya"');
+    expect(getFollowups(form)[4].prompt).toContain(
+      "series title or additional identity",
+    );
+  });
   it("starts without identity fields filled", () => {
     expect(defaultForm.childName).toBe("");
     expect(defaultForm.schoolName).toBe("");

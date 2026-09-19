@@ -189,15 +189,14 @@ export function getConsistencyRules(d: WorksheetForm) {
 export function getContinuationCommand(page: number) {
   if (!Number.isInteger(page) || page < 2 || page > 20)
     throw new Error("Nomor gambar lanjutan harus 2–20.");
-  return `lanjut gambar ${page}`;
+  return `gambar ${page}`;
 }
 export function getContinuationRules(d: WorksheetForm) {
   return [
-    `This is a sequential ${d.pageCount}-page worksheet project. ONE RESPONSE = ONE WORKSHEET IMAGE = ONE PRINTABLE PAGE. Start by generating ONLY image 1, then STOP and wait. Do not generate the whole set in the first response. Do not replace the requested image with a written lesson plan, prompt, code or description. If image generation is unavailable, state that clearly instead of pretending an image was produced.`,
+    `This is a sequential ${d.pageCount}-page worksheet project. Generate one requested worksheet image directly; do not replace it with a lesson plan, prompt, code, or description.`,
     d.pageCount > 1
-      ? `When the user writes "lanjut gambar 2", generate ONLY image 2 of THIS SAME series. Interpret "lanjut gambar N" as an explicit request for page N, using the page plan and design record below. The command always refers to this existing project, not a new theme or a new design. No need to ask again for settings or identity.`
-      : 'This project contains only page 1. Any continuation request, including "lanjut gambar 2", is outside this plan: ask whether the user wants to extend the series before rendering a second page.',
-    `For "lanjut" without a number, use the next page after the most recently generated page. For a repeated page number, revise/regenerate that page without incrementing the series. If a page is requested out of order, use its exact plan and retain the page 1 reference; do not generate intervening pages. If N is outside 1–${d.pageCount}, ask whether to extend the series before creating anything.`,
-    `Number the footer unobtrusively in the worksheet language: ${d.language === "id" ? `Lembar N dari ${d.pageCount}` : `Page N of ${d.pageCount}`}. Never print the chat command or production notes on the worksheet. After an image, at most one short line OUTSIDE the image may suggest the next command. After page ${d.pageCount}, say that the series is complete; do not offer a nonexistent next page.`,
+      ? `When the user writes "gambar 2" or "lanjut gambar 2", generate image 2 of this same series. Treat "gambar N" as page N without asking again for settings or identity.`
+      : "This project contains only page 1. Ask before extending it with another page.",
+    `For a repeated page number, revise that page. If N is outside 1–${d.pageCount}, ask whether to extend the series. Never print the chat command or production notes on the worksheet.`,
   ].join("\n");
 }

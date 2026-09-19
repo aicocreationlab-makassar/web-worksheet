@@ -159,7 +159,7 @@ test("complete wizard, validation, editing, copy, download and history", async (
     .getByRole("button", { name: "Salin perintah", exact: true })
     .click();
   expect(await page.evaluate(() => navigator.clipboard.readText())).toContain(
-    "lanjut gambar 2",
+    "gambar 2",
   );
   await expect(
     page.getByRole("link", { name: "Buka ChatGPT" }),

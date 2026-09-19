@@ -51,21 +51,23 @@ describe("composable prompt builder", () => {
   it("satisfies the ocean matching acceptance scenario", () => {
     const p = buildWorksheetPrompt(form);
     for (const text of [
-      "expert children's worksheet designer",
+      "Create and render ONE finished printable worksheet image now",
       "5-6",
-      "ocean",
+      "Bawah laut",
       "matching",
-      "large objects",
       "whitespace",
       "A4",
-      "flat printable page",
-      "watermarks",
-      "mockups",
+      "flat A4 portrait page",
+      "watermark",
+      "mockup",
       "child-friendly",
     ])
       expect(p.toLowerCase()).toContain(text.toLowerCase());
-    expect(buildPromptSections(form)).toHaveLength(19);
-    expect(p).toMatch(/The next user command is "lanjut gambar 2"\.$/);
+    expect(buildPromptSections(form)).toHaveLength(7);
+    expect(p).toContain('When the user later sends "gambar 2"');
+    expect(p).toContain(
+      "Create and render ONE finished printable worksheet image now",
+    );
   });
   it("includes all custom input and print preferences", () => {
     const p = buildWorksheetPrompt({
@@ -104,7 +106,7 @@ describe("composable prompt builder", () => {
       "Round blue robot",
       "minimal",
       "4 objects",
-      "6 activity items",
+      "Make exactly 6",
       "Recognize reusable objects",
       "Include a small leaf",
       "medium",
@@ -132,7 +134,8 @@ describe("composable prompt builder", () => {
   it("validates all templates", () => {
     for (const t of templates) {
       expect(WorksheetFormSchema.safeParse(t.form).success).toBe(true);
-      expect(buildWorksheetPrompt(t.form).length).toBeGreaterThan(1800);
+      expect(buildWorksheetPrompt(t.form).length).toBeGreaterThan(900);
+      expect(buildWorksheetPrompt(t.form).length).toBeLessThan(2600);
     }
   });
   it("rejects unsupported input before generation", () => {

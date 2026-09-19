@@ -25,8 +25,8 @@ export const guideSteps = [
     "Cek ejaan, jumlah objek, jawaban yang benar, dan kesesuaian aktivitas sebelum digunakan.",
   ],
   [
-    "Cukup ketik “lanjut gambar 2”",
-    "Gunakan percakapan yang sama. Lanjutkan dengan “lanjut gambar 3” dan seterusnya sesuai jumlah lembar. Jika hasil perlu diperbaiki, gunakan saran revisi; revisi tidak berpindah ke lembar berikutnya. Jika AI kehilangan konteks, salin instruksi lanjutan lengkap dan sertakan gambar sebelumnya sebagai referensi.",
+    "Cukup ketik “gambar 2”",
+    "Gunakan percakapan yang sama. Lanjutkan dengan “gambar 3” dan seterusnya sesuai jumlah lembar. Jika hasil perlu diperbaiki, gunakan saran revisi; revisi tidak berpindah ke lembar berikutnya. Jika AI kehilangan konteks, salin instruksi lanjutan lengkap dan sertakan gambar sebelumnya sebagai referensi.",
   ],
   [
     "Unduh dan cetak",
